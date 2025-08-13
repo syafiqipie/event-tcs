@@ -1,0 +1,4 @@
+[[language]]
+name = "c-sharp"
+formatter = { command = "csharpier", args = ["format"] }
+auto-format = true
