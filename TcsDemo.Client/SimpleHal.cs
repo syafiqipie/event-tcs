@@ -18,17 +18,17 @@ public class SimpleHal(DummyFirmware fw)
 	{
 		TaskCompletionSource<int> tcs = new();
 
-		void OnceCompleted(object? _, MotorDoneEventArgs args)
+		void OnceCompleted(object? _, StepperMotorDoneEventArgs args)
 		{
 			_logger?.LogInformation("The motor has moved to {args.Pos}", pos);
 			tcs.SetResult(args.Pos);
 		}
 
-		_fw.OnMotorMoveDone += OnceCompleted;
+		_fw.OnStepperMotorMoveDone += OnceCompleted;
 
 		tcs.Task.ContinueWith(_ =>
 		{
-			_fw.OnMotorMoveDone -= OnceCompleted;
+			_fw.OnStepperMotorMoveDone -= OnceCompleted;
 		});
 
 		_logger?.LogInformation("Requesting movement to {pos}", pos);
